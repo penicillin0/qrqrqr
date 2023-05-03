@@ -14,7 +14,6 @@ export const saveHistory = async (history: UrlHistory) => {
   try {
     const value = await storage.load({ key: "history" });
     const newValue = [...value, history];
-    console.log("newValue", newValue);
     await storage.save({ key: "history", data: newValue });
   } catch (e) {
     console.info("No history found", e);
