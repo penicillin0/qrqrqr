@@ -1,8 +1,8 @@
-import { Button, StyleSheet } from "react-native";
-
+import { useIsFocused } from "@react-navigation/native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import { View } from "../../components/Themed";
@@ -11,8 +11,8 @@ import { saveHistory } from "../../utils/storage";
 export default function TabOneScreen() {
   const [hasPermission, setHasPermission] = useState(false);
   const setScannedUrl = useSetRecoilState(ScannedUrlState);
-  const [scanned, setScanned] = useState(false);
   const router = useRouter();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -30,7 +30,6 @@ export default function TabOneScreen() {
     type: string;
     data: string;
   }) => {
-    setScanned(true);
     setScannedUrl(data);
     await saveHistory({
       url: data,
@@ -39,6 +38,9 @@ export default function TabOneScreen() {
     router.push("/result");
   };
 
+  if (!isFocused) {
+    return null;
+  }
   return (
     <View
       style={{
@@ -46,12 +48,9 @@ export default function TabOneScreen() {
       }}
     >
       <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        onBarCodeScanned={handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
-      )}
     </View>
   );
 }
