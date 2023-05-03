@@ -1,12 +1,17 @@
 import { Button, StyleSheet } from "react-native";
 
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { ScannedUrlState } from "../../atom/ScannedUrl";
 import { View } from "../../components/Themed";
 
 export default function TabOneScreen() {
   const [hasPermission, setHasPermission] = useState(false);
+  const setScannedUrl = useSetRecoilState(ScannedUrlState);
   const [scanned, setScanned] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -25,11 +30,16 @@ export default function TabOneScreen() {
     data: string;
   }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    setScannedUrl(data);
+    router.push("/result");
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        flex: 1,
+      }}
+    >
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
@@ -40,20 +50,3 @@ export default function TabOneScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

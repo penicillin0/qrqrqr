@@ -1,8 +1,12 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
-import { Pressable, useColorScheme } from "react-native";
+import { Tabs, useRouter } from "expo-router";
+import { Alert, Pressable } from "react-native";
 
 import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import * as ImagePicker from "expo-image-picker";
+import { useSetRecoilState } from "recoil";
+import { ScannedUrlState } from "../../atom/ScannedUrl";
 import Colors from "../../constants/Colors";
 
 /**
@@ -16,7 +20,31 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const colorScheme = "light";
+  const setScannedUrl = useSetRecoilState(ScannedUrlState);
+  const router = useRouter();
+  const pickImage = async () => {
+    console.log("pickImage");
+
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (result.canceled) {
+      Alert.alert("画像を選択してください。");
+      return;
+    }
+
+    const imageUri = result.assets[0].uri;
+    const barCodeUrl = (await BarCodeScanner.scanFromURLAsync(imageUri))[0]
+      .data;
+    setScannedUrl(barCodeUrl);
+    router.push("/result");
+  };
 
   return (
     <Tabs
@@ -39,18 +67,16 @@ export default function TabLayout() {
             />
           ),
           headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="photo"
-                    size={24}
-                    color="black"
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+            <Pressable onPress={pickImage}>
+              {({ pressed }) => (
+                <FontAwesome
+                  name="photo"
+                  size={24}
+                  color="black"
+                  style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                />
+              )}
+            </Pressable>
           ),
         }}
       />

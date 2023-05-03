@@ -32,6 +32,12 @@
         {
           "cameraPermission": "QRコードを読み取るためにカメラの使用を許可してください"
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "QRコードを読み取る写真を選択するために写真へのアクセスを許可してください"
+        }
       ]
     ]
   }
