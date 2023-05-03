@@ -8,6 +8,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import Colors from "../../constants/Colors";
+import { saveHistory } from "../../utils/storage";
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -43,6 +44,10 @@ export default function TabLayout() {
     const barCodeUrl = (await BarCodeScanner.scanFromURLAsync(imageUri))[0]
       .data;
     setScannedUrl(barCodeUrl);
+    await saveHistory({
+      url: barCodeUrl,
+      timestamp: Date.now(),
+    });
     router.push("/result");
   };
 
@@ -81,7 +86,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="history"
         options={{
           title: "履歴",
           tabBarIcon: ({ color }) => (

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import { View } from "../../components/Themed";
+import { saveHistory } from "../../utils/storage";
 
 export default function TabOneScreen() {
   const [hasPermission, setHasPermission] = useState(false);
@@ -22,7 +23,7 @@ export default function TabOneScreen() {
     getBarCodeScannerPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({
+  const handleBarCodeScanned = async ({
     type,
     data,
   }: {
@@ -31,6 +32,10 @@ export default function TabOneScreen() {
   }) => {
     setScanned(true);
     setScannedUrl(data);
+    await saveHistory({
+      url: data,
+      timestamp: Date.now(),
+    });
     router.push("/result");
   };
 
