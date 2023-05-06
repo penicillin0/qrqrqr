@@ -1,52 +1,80 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 
-import { useState } from "react";
-import EditScreenInfo from "../../components/EditScreenInfo";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
 import { Text, View } from "../../components/Themed";
+import Colors from "../../constants/Colors";
 import { UrlHistory, loadHistory } from "../../utils/storage";
 
 export default function HistoryScreen() {
   const [histories, setHistories] = useState<UrlHistory[]>([]);
-  const handleOnPress = async () => {
-    const histories = await loadHistory();
-    setHistories(histories);
-  };
+
+  useEffect(() => {
+    (async () => {
+      const histories = await loadHistory();
+      setHistories(histories);
+    })();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <TouchableOpacity onPress={handleOnPress}>
-        <Text> load</Text>
-      </TouchableOpacity>
-      {histories.map((history) => (
-        <View
-          key={history.timestamp}
-          style={{
-            flexDirection: "row",
-            gap: 8,
-          }}
-        >
-          <Text
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: Colors.light.background,
+      }}
+    >
+      <FlatList
+        data={histories}
+        keyExtractor={(item) => item.timestamp.toString()}
+        renderItem={({ item }) => (
+          <View
             style={{
-              color: "white",
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: Colors.light.background,
+              padding: 16,
             }}
           >
-            {history.url}
-          </Text>
-          <Text
+            <View
+              style={{
+                backgroundColor: "transparent",
+              }}
+            >
+              <Text
+                style={{
+                  color: Colors.light.darkGrey,
+                }}
+              >
+                {item.url}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: Colors.light.grey,
+                }}
+              >
+                {new Date(item.timestamp).toLocaleString()}
+              </Text>
+            </View>
+            <MaterialIcons
+              style={{
+                marginLeft: "auto",
+              }}
+              name="arrow-forward-ios"
+              size={20}
+              color={Colors.light.lightGrey}
+            />
+          </View>
+        )}
+        ItemSeparatorComponent={() => (
+          <View
             style={{
-              color: "white",
+              backgroundColor: Colors.light.lightGrey,
+              height: StyleSheet.hairlineWidth,
             }}
-          >
-            {new Date(history.timestamp).toLocaleString()}
-          </Text>
-        </View>
-      ))}
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
+          />
+        )}
       />
-      <EditScreenInfo path="app/(tabs)/history.tsx" />
     </View>
   );
 }
