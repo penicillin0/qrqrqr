@@ -1,5 +1,13 @@
 import { MaterialIcons, Octicons } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
+import * as Clipboard from "expo-clipboard";
+import {
+  Linking,
+  Platform,
+  Share,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+} from "react-native";
 import { useRecoilValue } from "recoil";
 import { ScannedUrlState } from "../atom/ScannedUrl";
 import { Text, View } from "../components/Themed";
@@ -38,7 +46,14 @@ export default function ResultScreen() {
             color={Colors.light.darkGrey}
           />
         }
-        onPress={() => {}}
+        onPress={() => {
+          (async () => {
+            const canOpen = await Linking.canOpenURL(scannedUrl);
+            if (canOpen) {
+              await Linking.openURL(scannedUrl);
+            }
+          })();
+        }}
         title={scannedUrl}
         titleColor={Colors.light.tint}
       />
@@ -58,12 +73,29 @@ export default function ResultScreen() {
           borderTopWidth: StyleSheet.hairlineWidth,
         }}
         icon={<Octicons name="copy" size={24} color={Colors.light.darkGrey} />}
-        onPress={() => {}}
+        onPress={() => {
+          (async () => {
+            if (Platform.OS === "ios") {
+              await Clipboard.setUrlAsync(scannedUrl);
+            }
+            await Clipboard.setStringAsync(scannedUrl);
+          })();
+        }}
         title="コピーする"
       />
       <ActionItem
         icon={<Octicons name="share" size={24} color={Colors.light.darkGrey} />}
-        onPress={() => {}}
+        onPress={() => {
+          (async () => {
+            try {
+              const result = await Share.share({
+                message: scannedUrl,
+              });
+            } catch (error) {
+              console.info(error);
+            }
+          })();
+        }}
         title="共有する"
       />
     </View>
@@ -103,7 +135,7 @@ const ActionItem = (props: {
     </View>
     <Text
       style={{
-        color: props.titleColor ?? Colors.light.grey,
+        color: props.titleColor ?? Colors.light.darkGrey,
         fontSize: 16,
         marginLeft: 16,
       }}
