@@ -1,10 +1,11 @@
-import { FlatList, StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
+import { SwipeListView } from "react-native-swipe-list-view";
 import { Text, View } from "../../components/Themed";
 import Colors from "../../constants/Colors";
-import { UrlHistory, loadHistory } from "../../utils/storage";
+import { UrlHistory, deleteHistory, loadHistory } from "../../utils/storage";
 
 export default function HistoryScreen() {
   const [histories, setHistories] = useState<UrlHistory[]>([]);
@@ -23,7 +24,7 @@ export default function HistoryScreen() {
         backgroundColor: Colors.light.background,
       }}
     >
-      <FlatList
+      <SwipeListView
         data={histories}
         keyExtractor={(item) => item.timestamp.toString()}
         renderItem={({ item }) => (
@@ -74,6 +75,36 @@ export default function HistoryScreen() {
             }}
           />
         )}
+        renderHiddenItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              deleteHistory({
+                timestamp: item.timestamp,
+                url: item.url,
+              });
+              setHistories(
+                histories.filter((h) => h.timestamp !== item.timestamp)
+              );
+            }}
+            style={{
+              backgroundColor: "red",
+              justifyContent: "center",
+              alignItems: "flex-end",
+              padding: 16,
+              height: "100%",
+            }}
+          >
+            <Text
+              style={{
+                color: Colors.light.background,
+                fontWeight: "bold",
+              }}
+            >
+              削除
+            </Text>
+          </TouchableOpacity>
+        )}
+        rightOpenValue={-64}
       />
     </View>
   );
