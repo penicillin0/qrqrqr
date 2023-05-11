@@ -15,12 +15,10 @@ export default function TabOneScreen() {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
+    (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === "granted");
-    };
-
-    getBarCodeScannerPermissions();
+    })();
   }, []);
 
   const handleBarCodeScanned = async ({
