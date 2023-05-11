@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
-import { View } from "../../components/Themed";
+import { Text, View } from "../../components/Themed";
 import { saveHistory } from "../../utils/storage";
 
 export default function TabOneScreen() {
@@ -51,6 +51,27 @@ export default function TabOneScreen() {
         onBarCodeScanned={handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
+      <View
+        style={{
+          alignSelf: "center",
+          alignItems: "center",
+          marginTop: 12,
+          paddingHorizontal: 20,
+          paddingVertical: 12,
+          borderRadius: 8,
+          position: "absolute",
+          backgroundColor: "rgba(0,0,0,0.5)",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 16,
+            color: "white",
+          }}
+        >
+          QRコードを配置を配置してください
+        </Text>
+      </View>
     </View>
   );
 }
