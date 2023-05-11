@@ -1,11 +1,13 @@
 import { useIsFocused } from "@react-navigation/native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useRouter } from "expo-router";
+import * as StoreReview from "expo-store-review";
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import { Text, View } from "../../components/Themed";
+import { addCountForStore } from "../../utils/addCountForStore";
 import { saveHistory } from "../../utils/storage";
 
 export default function TabOneScreen() {
@@ -29,6 +31,16 @@ export default function TabOneScreen() {
     data: string;
   }) => {
     setScannedUrl(data);
+    const count = await addCountForStore();
+    Alert.alert(count.toString());
+
+    if (count > 10 && count % 25 === 0) {
+      const isAvailable = await StoreReview.isAvailableAsync();
+      if (isAvailable) {
+        await StoreReview.requestReview();
+      }
+    }
+
     await saveHistory({
       url: data,
       timestamp: Date.now(),

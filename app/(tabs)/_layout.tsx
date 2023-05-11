@@ -8,6 +8,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import Colors from "../../constants/Colors";
+import { addCountForStore } from "../../utils/addCountForStore";
 import { saveHistory } from "../../utils/storage";
 
 /**
@@ -25,9 +26,6 @@ export default function TabLayout() {
   const setScannedUrl = useSetRecoilState(ScannedUrlState);
   const router = useRouter();
   const pickImage = async () => {
-    console.log("pickImage");
-
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -44,6 +42,7 @@ export default function TabLayout() {
     const barCodeUrl = (await BarCodeScanner.scanFromURLAsync(imageUri))[0]
       .data;
     setScannedUrl(barCodeUrl);
+    await addCountForStore();
     await saveHistory({
       url: barCodeUrl,
       timestamp: Date.now(),
