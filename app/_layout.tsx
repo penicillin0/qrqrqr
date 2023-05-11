@@ -41,7 +41,12 @@ function RootLayoutNav() {
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" />
-          <Stack.Screen name="result" />
+          <Stack.Screen
+            name="result"
+            options={{
+              title: "読み取り結果",
+            }}
+          />
         </Stack>
       </ThemeProvider>
     </>
