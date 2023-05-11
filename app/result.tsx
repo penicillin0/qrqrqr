@@ -1,6 +1,7 @@
 import { MaterialIcons, Octicons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import {
+  Alert,
   Linking,
   Platform,
   Share,
@@ -77,6 +78,7 @@ export default function ResultScreen() {
           (async () => {
             if (Platform.OS === "ios") {
               await Clipboard.setUrlAsync(scannedUrl);
+              Alert.alert("コピーしました");
             }
             await Clipboard.setStringAsync(scannedUrl);
           })();
