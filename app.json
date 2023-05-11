@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "qrqrqr",
+    "name": "QRコード",
     "slug": "qrqrqr",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,7 +14,9 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.penicillin0.qrqrqr",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
