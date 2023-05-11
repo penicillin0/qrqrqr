@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useRouter } from "expo-router";
@@ -61,6 +62,22 @@ export default function TabOneScreen() {
         onBarCodeScanned={handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
+      <View
+        style={{
+          flex: 1,
+          alignSelf: "center",
+          justifyContent: "center",
+          position: "absolute",
+          height: "100%",
+          backgroundColor: "transparent",
+        }}
+      >
+        <MaterialCommunityIcons
+          name="qrcode-scan"
+          size={128}
+          color={"rgba(255,255,255,0.5)"}
+        />
+      </View>
       <View
         style={{
           alignSelf: "center",
