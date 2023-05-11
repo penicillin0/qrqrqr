@@ -90,7 +90,7 @@ export default function ResultScreen() {
         onPress={() => {
           (async () => {
             try {
-              const result = await Share.share({
+              await Share.share({
                 message: scannedUrl,
               });
             } catch (error) {
