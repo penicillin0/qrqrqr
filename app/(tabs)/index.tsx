@@ -4,7 +4,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { useRouter } from "expo-router";
 import * as StoreReview from "expo-store-review";
 import { useEffect, useState } from "react";
-import { Alert, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import { Text, View } from "../../components/Themed";
@@ -33,7 +33,6 @@ export default function TabOneScreen() {
   }) => {
     setScannedUrl(data);
     const count = await addCountForStore();
-    Alert.alert(count.toString());
 
     if (count > 10 && count % 25 === 0) {
       const isAvailable = await StoreReview.isAvailableAsync();
