@@ -2,7 +2,7 @@
   "expo": {
     "name": "QRコード",
     "slug": "qrqrqr",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -12,13 +12,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.penicillin0.qrqrqr",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.3",
       "infoPlist": {
         "NSCameraUsageDescription": "QRコードを読み取るためにカメラの使用を許可してください",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
