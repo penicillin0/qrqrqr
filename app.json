@@ -6,7 +6,7 @@
       "en": "./languages/en.json"
     },
     "slug": "qrqrqr",
-    "version": "1.0.4",
+    "version": "1.4.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -20,12 +20,8 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.penicillin0.qrqrqr",
-      "buildNumber": "1.0.4",
-      "infoPlist": {
-        "NSCameraUsageDescription": "QRコードを読み取るためにカメラの使用を許可してください",
-        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone",
-        "CFBundleAllowMixedLocalizations": true
-      }
+      "buildNumber": "1.4.0",
+      "infoPlist": { "CFBundleAllowMixedLocalizations": true }
     },
     "android": {
       "adaptiveIcon": {
@@ -42,18 +38,8 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      [
-        "expo-barcode-scanner",
-        {
-          "cameraPermission": "QRコードを読み取るためにカメラの使用を許可してください"
-        }
-      ],
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "QRコードを読み取る写真を選択するために写真へのアクセスを許可してください"
-        }
-      ],
+      ["expo-barcode-scanner"],
+      ["expo-image-picker"],
       "expo-router",
       "expo-localization"
     ],

@@ -1,3 +1,5 @@
 {
-  "CFBundleDisplayName": "QR Code Scanner"
+  "CFBundleDisplayName": "QR Code Scanner",
+  "NSCameraUsageDescription": "This app requires access to the camera to scan QR codes.",
+  "NSPhotoLibraryUsageDescription": "This app requires access to the photo library to save QR codes."
 }
