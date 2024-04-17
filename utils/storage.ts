@@ -8,6 +8,7 @@ export type UrlHistory = {
 
 const storage: Storage = new Storage({
   storageBackend: AsyncStorage,
+  defaultExpires: null,
 });
 
 export const saveHistory = async (history: UrlHistory) => {
