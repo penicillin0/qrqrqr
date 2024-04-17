@@ -4,12 +4,12 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { useRouter } from "expo-router";
 import * as StoreReview from "expo-store-review";
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
-import { Text, View } from "../../components/Themed";
 import { addCountForStore } from "../../utils/addCountForStore";
 import { saveHistory } from "../../utils/storage";
+import { i18n } from "../../utils/i18n";
 
 export default function TabOneScreen() {
   const [hasPermission, setHasPermission] = useState(false);
@@ -52,11 +52,7 @@ export default function TabOneScreen() {
     return null;
   }
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
+    <View style={{ flex: 1 }}>
       <BarCodeScanner
         onBarCodeScanned={handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
@@ -89,13 +85,8 @@ export default function TabOneScreen() {
           backgroundColor: "rgba(0,0,0,0.5)",
         }}
       >
-        <Text
-          style={{
-            fontSize: 16,
-            color: "white",
-          }}
-        >
-          QRコードを配置を配置してください
+        <Text style={{ fontSize: 16, color: "white" }}>
+          {i18n.t("QRコードを配置を配置してください")}
         </Text>
       </View>
     </View>

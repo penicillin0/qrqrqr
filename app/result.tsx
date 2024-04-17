@@ -6,13 +6,14 @@ import {
   Platform,
   Share,
   StyleSheet,
-  TouchableOpacity,
-  ViewStyle,
+  Text,
+  View,
 } from "react-native";
 import { useRecoilValue } from "recoil";
 import { ScannedUrlState } from "../atom/ScannedUrl";
-import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
+import { i18n } from "../utils/i18n";
+import { ActionItem } from "../components/ActionItem";
 
 export default function ResultScreen() {
   const scannedUrl = useRecoilValue(ScannedUrlState);
@@ -33,7 +34,7 @@ export default function ResultScreen() {
           marginBottom: 8,
         }}
       >
-        読み取り内容
+        {i18n.t("読み取り内容")}
       </Text>
       <ActionItem
         containerStyle={{
@@ -66,7 +67,7 @@ export default function ResultScreen() {
           marginBottom: 8,
         }}
       >
-        アクション
+        {i18n.t("アクション")}
       </Text>
       <ActionItem
         containerStyle={{
@@ -78,12 +79,12 @@ export default function ResultScreen() {
           (async () => {
             if (Platform.OS === "ios") {
               await Clipboard.setUrlAsync(scannedUrl);
-              Alert.alert("コピーしました");
+              Alert.alert(i18n.t("コピーしました"));
             }
             await Clipboard.setStringAsync(scannedUrl);
           })();
         }}
-        title="コピーする"
+        title={i18n.t("コピーする")}
       />
       <ActionItem
         icon={<Octicons name="share" size={24} color={Colors.light.darkGrey} />}
@@ -98,59 +99,8 @@ export default function ResultScreen() {
             }
           })();
         }}
-        title="共有する"
+        title={i18n.t("共有する")}
       />
     </View>
   );
 }
-
-const ActionItem = (props: {
-  containerStyle?: ViewStyle;
-  title: string;
-  titleColor?: string;
-  onPress: () => void;
-  icon: React.ReactNode;
-}) => (
-  <TouchableOpacity
-    onPress={props.onPress}
-    style={[
-      {
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 16,
-        borderBottomColor: Colors.light.lightGrey,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-      },
-      props.containerStyle,
-    ]}
-  >
-    <View
-      style={{
-        width: 24,
-        height: 24,
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {props.icon}
-    </View>
-    <Text
-      style={{
-        color: props.titleColor ?? Colors.light.darkGrey,
-        fontSize: 16,
-        marginLeft: 16,
-      }}
-    >
-      {props.title}
-    </Text>
-    <MaterialIcons
-      style={{
-        marginLeft: "auto",
-      }}
-      name="arrow-forward-ios"
-      size={24}
-      color={Colors.light.lightGrey}
-    />
-  </TouchableOpacity>
-);

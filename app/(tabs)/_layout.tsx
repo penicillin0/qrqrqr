@@ -10,16 +10,7 @@ import { ScannedUrlState } from "../../atom/ScannedUrl";
 import Colors from "../../constants/Colors";
 import { addCountForStore } from "../../utils/addCountForStore";
 import { saveHistory } from "../../utils/storage";
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+import { i18n } from "../../utils/i18n";
 
 export default function TabLayout() {
   const colorScheme = "light";
@@ -34,7 +25,7 @@ export default function TabLayout() {
     });
 
     if (result.canceled) {
-      Alert.alert("画像を選択してください。");
+      Alert.alert(i18n.t("画像を選択してください"));
       return;
     }
 
@@ -62,7 +53,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "読み取り",
+          title: i18n.t("読み取り"),
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="qrcode-scan"
@@ -87,7 +78,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="history"
         options={{
-          title: "履歴",
+          title: i18n.t("履歴"),
           tabBarIcon: ({ color }) => (
             <Entypo name="text-document" size={24} color={color} />
           ),

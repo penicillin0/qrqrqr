@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.penicillin0.qrqrqr",
@@ -49,7 +51,8 @@
           "photosPermission": "QRコードを読み取る写真を選択するために写真へのアクセスを許可してください"
         }
       ],
-      "expo-router"
+      "expo-router",
+      "expo-localization"
     ],
     "extra": {
       "eas": {

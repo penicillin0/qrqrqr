@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { RecoilRoot } from "recoil";
+import { i18n } from "../utils/i18n";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -53,8 +54,8 @@ function RootLayoutNav() {
           <Stack.Screen
             name="result"
             options={{
-              headerBackTitle: "戻る",
-              title: "読み取り結果",
+              headerBackTitle: i18n.t("戻る"),
+              title: i18n.t("読み取り結果"),
             }}
           />
         </Stack>

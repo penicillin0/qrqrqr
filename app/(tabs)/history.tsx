@@ -1,4 +1,10 @@
-import { StyleSheet, TouchableHighlight, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
@@ -7,9 +13,9 @@ import { useEffect, useState } from "react";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
-import { Text, View } from "../../components/Themed";
 import Colors from "../../constants/Colors";
 import { UrlHistory, deleteHistory, loadHistory } from "../../utils/storage";
+import { i18n } from "../../utils/i18n";
 
 export default function HistoryScreen() {
   const [histories, setHistories] = useState<UrlHistory[]>([]);
@@ -51,31 +57,14 @@ export default function HistoryScreen() {
             }}
           >
             <>
-              <View
-                style={{
-                  backgroundColor: "transparent",
-                }}
-              >
-                <Text
-                  style={{
-                    color: Colors.light.darkGrey,
-                  }}
-                >
-                  {item.url}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: Colors.light.grey,
-                  }}
-                >
+              <View style={{ backgroundColor: "transparent" }}>
+                <Text style={{ color: Colors.light.darkGrey }}>{item.url}</Text>
+                <Text style={{ fontSize: 12, color: Colors.light.grey }}>
                   {new Date(item.timestamp).toLocaleString()}
                 </Text>
               </View>
               <MaterialIcons
-                style={{
-                  marginLeft: "auto",
-                }}
+                style={{ marginLeft: "auto" }}
                 name="arrow-forward-ios"
                 size={20}
                 color={Colors.light.lightGrey}
@@ -111,12 +100,9 @@ export default function HistoryScreen() {
             }}
           >
             <Text
-              style={{
-                color: Colors.light.background,
-                fontWeight: "bold",
-              }}
+              style={{ color: Colors.light.background, fontWeight: "bold" }}
             >
-              削除
+              {i18n.t("削除")}
             </Text>
           </TouchableOpacity>
         )}
@@ -125,20 +111,3 @@ export default function HistoryScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
