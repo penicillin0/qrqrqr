@@ -53,6 +53,7 @@ function RootLayoutNav() {
           <Stack.Screen
             name="result"
             options={{
+              headerBackTitle: "戻る",
               title: "読み取り結果",
             }}
           />
