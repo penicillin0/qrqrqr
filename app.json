@@ -50,7 +50,9 @@
         {
           "photosPermission": "QRコードを読み取る写真を選択するために写真へのアクセスを許可してください"
         }
-      ]
+      ],
+      "expo-localization",
+      "expo-router"
     ],
     "extra": {
       "eas": {

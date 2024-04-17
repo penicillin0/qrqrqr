@@ -23,12 +23,21 @@ export default function RootLayout() {
     if (error) throw error;
   }, [error]);
 
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <>
       <RecoilRoot>
         {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
-        {!loaded && <SplashScreen />}
-        {loaded && <RootLayoutNav />}
+        <RootLayoutNav />
       </RecoilRoot>
     </>
   );
