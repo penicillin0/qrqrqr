@@ -1,6 +1,10 @@
 {
   "expo": {
     "name": "QRコード",
+    "locales": {
+      "ja": "./languages/ja.json",
+      "en": "./languages/en.json"
+    },
     "slug": "qrqrqr",
     "version": "1.0.4",
     "orientation": "portrait",
@@ -12,16 +16,15 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.penicillin0.qrqrqr",
       "buildNumber": "1.0.4",
       "infoPlist": {
         "NSCameraUsageDescription": "QRコードを読み取るためにカメラの使用を許可してください",
-        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone",
+        "CFBundleAllowMixedLocalizations": true
       }
     },
     "android": {
@@ -54,6 +57,7 @@
       "expo-router",
       "expo-localization"
     ],
+    "experiments": { "typedRoutes": true },
     "extra": {
       "eas": {
         "projectId": "7c13fcfd-3d03-472a-969d-9ce052b22a7e"
