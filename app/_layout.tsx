@@ -1,10 +1,18 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import * as StoreReview from "expo-store-review";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { RecoilRoot } from "recoil";
 import { i18n } from "../utils/i18n";
+import { sleep } from "../utils/sleep";
+import {
+  doneReviewRequest,
+  isAlreadyReviewRequest,
+} from "../utils/reviewRequest";
+import { getCountForStore } from "../utils/addCountForStore";
+import { ReviewRequestModal } from "../components/ReviewRequestModal";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -45,9 +53,40 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const [shouldReviewRequest, setShouldReviewRequest] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      // ニョキッと出てきた感をだすために少し待つ
+      await sleep(1000);
+
+      const isAlreadyRequest = await isAlreadyReviewRequest();
+      if (isAlreadyRequest) return;
+
+      const count = await getCountForStore();
+      if (count < 3) return;
+
+      setShouldReviewRequest(true);
+    })();
+  }, []);
+
   return (
     <>
       <ThemeProvider value={DefaultTheme}>
+        <ReviewRequestModal
+          isOpen={shouldReviewRequest}
+          onCancelPress={() => {
+            setShouldReviewRequest(false);
+          }}
+          onReviewPress={async () => {
+            const isAvailable = await StoreReview.isAvailableAsync();
+            if (isAvailable) {
+              await StoreReview.requestReview();
+            }
+            await doneReviewRequest();
+            setShouldReviewRequest(false);
+          }}
+        />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" />
