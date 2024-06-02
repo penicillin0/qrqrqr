@@ -2,7 +2,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs, useRouter } from "expo-router";
 import { Alert, Pressable } from "react-native";
 
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import * as ImagePicker from "expo-image-picker";
 import { useSetRecoilState } from "recoil";
@@ -79,7 +79,15 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen name="history" />
+      <Tabs.Screen
+        name="history"
+        options={{
+          title: i18n.t("履歴"),
+          tabBarIcon: ({ color }) => (
+            <Entypo name="text-document" size={24} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

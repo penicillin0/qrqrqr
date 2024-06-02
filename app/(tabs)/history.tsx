@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 
-import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
 import { Tabs, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -43,9 +43,6 @@ export default function HistoryScreen() {
       <Tabs.Screen
         options={{
           title: i18n.t("履歴"),
-          tabBarIcon: ({ color }) => (
-            <Entypo name="text-document" size={24} color={color} />
-          ),
           headerRight: () => (
             <TouchableOpacity
               style={{ marginRight: 16, padding: 4 }}
@@ -103,8 +100,11 @@ export default function HistoryScreen() {
               }}
             >
               <>
-                <View style={{ backgroundColor: "transparent" }}>
-                  <Text style={{ color: Colors.light.darkGrey }}>
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={{ color: Colors.light.darkGrey }}
+                    numberOfLines={1}
+                  >
                     {item.url}
                   </Text>
                   <Text style={{ fontSize: 12, color: Colors.light.grey }}>

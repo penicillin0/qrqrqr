@@ -50,6 +50,7 @@ export default function ResultScreen() {
                   gap: 4,
                   paddingVertical: 8,
                   paddingRight: 8,
+                  marginLeft: -4,
                 }}
               >
                 <Entypo
@@ -78,7 +79,7 @@ export default function ResultScreen() {
           borderTopWidth: StyleSheet.hairlineWidth,
           backgroundColor: Colors.light.background,
           paddingTop: 32,
-          paddingLeft: 32,
+          paddingLeft: 20,
         }}
       >
         <Text
