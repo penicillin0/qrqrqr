@@ -1,10 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import {
-  ViewStyle,
-  TouchableOpacity,
-  View,
   StyleSheet,
   Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from "react-native";
 import Colors from "../constants/Colors";
 
@@ -41,6 +41,7 @@ export const ActionItem = (props: {
     </View>
     <Text
       style={{
+        flex: 1,
         color: props.titleColor ?? Colors.light.darkGrey,
         fontSize: 16,
         marginLeft: 16,

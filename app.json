@@ -6,7 +6,7 @@
       "en": "./languages/en.json"
     },
     "slug": "qrqrqr",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -16,12 +16,16 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.penicillin0.qrqrqr",
-      "buildNumber": "1.4.0",
-      "infoPlist": { "CFBundleAllowMixedLocalizations": true }
+      "buildNumber": "1.4.1",
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -38,12 +42,20 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      ["expo-barcode-scanner"],
-      ["expo-image-picker"],
+      [
+        "expo-barcode-scanner"
+      ],
+      [
+        "expo-image-picker"
+      ],
       "expo-router",
-      "expo-localization"
+      "expo-localization",
+      "expo-font",
+      "expo-secure-store"
     ],
-    "experiments": { "typedRoutes": true },
+    "experiments": {
+      "typedRoutes": true
+    },
     "extra": {
       "eas": {
         "projectId": "7c13fcfd-3d03-472a-969d-9ce052b22a7e"

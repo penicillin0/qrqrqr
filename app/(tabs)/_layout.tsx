@@ -9,8 +9,8 @@ import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import Colors from "../../constants/Colors";
 import { addCountForStore } from "../../utils/addCountForStore";
-import { saveHistory } from "../../utils/storage";
 import { i18n } from "../../utils/i18n";
+import { saveHistory } from "../../utils/storage";
 
 export default function TabLayout() {
   const colorScheme = "light";
@@ -30,6 +30,7 @@ export default function TabLayout() {
     }
 
     const imageUri = result.assets[0].uri;
+    // TODO: BarCodeScannerが非推奨なので、代替手段を探す
     const barCodeUrl = (await BarCodeScanner.scanFromURLAsync(imageUri))[0]
       .data;
     setScannedUrl(barCodeUrl);
@@ -45,9 +46,8 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        tabBarLabelStyle: {
-          fontWeight: "bold",
-        },
+        tabBarStyle: { height: 82 },
+        tabBarLabelStyle: { fontWeight: "bold" },
       }}
     >
       <Tabs.Screen
@@ -62,7 +62,10 @@ export default function TabLayout() {
             />
           ),
           headerRight: () => (
-            <Pressable onPress={pickImage}>
+            <Pressable
+              onPress={pickImage}
+              style={{ marginRight: 2, padding: 2 }}
+            >
               {({ pressed }) => (
                 <FontAwesome
                   name="photo"

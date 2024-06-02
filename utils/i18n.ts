@@ -20,6 +20,9 @@ export const i18n = new I18n({
     キャンセル: "Cancel",
     "あなたの評価が\nアプリの力になります！":
       "Your review\nwill help us a lot!",
+    設定からカメラの使用を許可してください:
+      "Please allow camera access in settings",
+    "全ての履歴を削除しますか？": "Delete all history?",
   },
   ja: {
     読み取り: "読み取り",
@@ -39,6 +42,9 @@ export const i18n = new I18n({
     キャンセル: "キャンセル",
     "あなたの評価が\nアプリの力になります！":
       "あなたの評価が\nアプリの力になります！",
+    設定からカメラの使用を許可してください:
+      "設定からカメラの使用を許可してください",
+    "全ての履歴を削除しますか？": "全ての履歴を削除しますか？",
   },
 });
 

@@ -1,18 +1,17 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import * as StoreReview from "expo-store-review";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
+import * as StoreReview from "expo-store-review";
 import { useEffect, useState } from "react";
 import { RecoilRoot } from "recoil";
-import { i18n } from "../utils/i18n";
-import { sleep } from "../utils/sleep";
+import { ReviewRequestModal } from "../components/ReviewRequestModal";
+import { getCountForStore } from "../utils/addCountForStore";
 import {
   doneReviewRequest,
   isAlreadyReviewRequest,
 } from "../utils/reviewRequest";
-import { getCountForStore } from "../utils/addCountForStore";
-import { ReviewRequestModal } from "../components/ReviewRequestModal";
+import { sleep } from "../utils/sleep";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -90,13 +89,7 @@ function RootLayoutNav() {
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" />
-          <Stack.Screen
-            name="result"
-            options={{
-              headerBackTitle: i18n.t("戻る"),
-              title: i18n.t("読み取り結果"),
-            }}
-          />
+          <Stack.Screen name="result" />
         </Stack>
       </ThemeProvider>
     </>

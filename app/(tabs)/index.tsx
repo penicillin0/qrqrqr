@@ -1,36 +1,36 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
-import { BarCodeScanner } from "expo-barcode-scanner";
+import { Camera, CameraView } from "expo-camera";
 import { useRouter } from "expo-router";
 import * as StoreReview from "expo-store-review";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import { addCountForStore } from "../../utils/addCountForStore";
-import { saveHistory } from "../../utils/storage";
 import { i18n } from "../../utils/i18n";
+import { saveHistory } from "../../utils/storage";
+import { StatusBar } from "expo-status-bar";
 
 export default function TabOneScreen() {
   const [hasPermission, setHasPermission] = useState(false);
-  const setScannedUrl = useSetRecoilState(ScannedUrlState);
+  const [scannedUrl, setScannedUrl] = useRecoilState(ScannedUrlState);
+
   const router = useRouter();
   const isFocused = useIsFocused();
 
   useEffect(() => {
+    setScannedUrl("");
+
     (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === "granted");
     })();
   }, []);
 
-  const handleBarCodeScanned = async ({
-    type,
-    data,
-  }: {
-    type: string;
-    data: string;
-  }) => {
+  const handleBarCodeScanned = async ({ data }: { data: string }) => {
+    if (scannedUrl) return;
+
     setScannedUrl(data);
     const count = await addCountForStore();
 
@@ -51,44 +51,56 @@ export default function TabOneScreen() {
   if (!isFocused) {
     return null;
   }
+
+  if (!hasPermission) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>{i18n.t("設定からカメラの使用を許可してください")}</Text>
+      </View>
+    );
+  }
   return (
-    <View style={{ flex: 1 }}>
-      <BarCodeScanner
-        onBarCodeScanned={handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "center",
-          justifyContent: "center",
-          position: "absolute",
-          height: "100%",
-          backgroundColor: "transparent",
-        }}
-      >
-        <MaterialCommunityIcons
-          name="qrcode-scan"
-          size={128}
-          color={"rgba(255,255,255,0.5)"}
+    <>
+      <StatusBar style="dark" />
+      <View style={{ flex: 1 }}>
+        <CameraView
+          onBarcodeScanned={handleBarCodeScanned}
+          barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
+          style={StyleSheet.absoluteFillObject}
         />
+        <View
+          style={{
+            flex: 1,
+            alignSelf: "center",
+            justifyContent: "center",
+            position: "absolute",
+            height: "100%",
+            backgroundColor: "transparent",
+          }}
+        >
+          <MaterialCommunityIcons
+            name="qrcode-scan"
+            size={128}
+            color={"rgba(255,255,255,0.5)"}
+          />
+        </View>
+        <View
+          style={{
+            alignSelf: "center",
+            alignItems: "center",
+            marginTop: 12,
+            paddingHorizontal: 20,
+            paddingVertical: 12,
+            borderRadius: 8,
+            position: "absolute",
+            backgroundColor: "rgba(0,0,0,0.5)",
+          }}
+        >
+          <Text style={{ fontSize: 16, color: "white" }}>
+            {i18n.t("QRコードを配置を配置してください")}
+          </Text>
+        </View>
       </View>
-      <View
-        style={{
-          alignSelf: "center",
-          alignItems: "center",
-          marginTop: 12,
-          paddingHorizontal: 20,
-          paddingVertical: 12,
-          borderRadius: 8,
-          position: "absolute",
-          backgroundColor: "rgba(0,0,0,0.5)",
-        }}
-      >
-        <Text style={{ fontSize: 16, color: "white" }}>
-          {i18n.t("QRコードを配置を配置してください")}
-        </Text>
-      </View>
-    </View>
+    </>
   );
 }
