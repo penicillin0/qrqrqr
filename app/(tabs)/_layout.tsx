@@ -2,15 +2,15 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs, useRouter } from "expo-router";
 import { Alert, Pressable } from "react-native";
 
-import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import * as ImagePicker from "expo-image-picker";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import Colors from "../../constants/Colors";
 import { addCountForStore } from "../../utils/addCountForStore";
-import { saveHistory } from "../../utils/storage";
 import { i18n } from "../../utils/i18n";
+import { saveHistory } from "../../utils/storage";
 
 export default function TabLayout() {
   const colorScheme = "light";
@@ -75,15 +75,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="history"
-        options={{
-          title: i18n.t("履歴"),
-          tabBarIcon: ({ color }) => (
-            <Entypo name="text-document" size={24} color={color} />
-          ),
-        }}
-      />
+      <Tabs.Screen name="history" />
     </Tabs>
   );
 }
