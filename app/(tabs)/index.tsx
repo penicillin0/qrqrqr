@@ -8,8 +8,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { useSetRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import { addCountForStore } from "../../utils/addCountForStore";
-import { saveHistory } from "../../utils/storage";
 import { i18n } from "../../utils/i18n";
+import { saveHistory } from "../../utils/storage";
 
 export default function TabOneScreen() {
   const [hasPermission, setHasPermission] = useState(false);
