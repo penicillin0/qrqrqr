@@ -46,9 +46,8 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        tabBarLabelStyle: {
-          fontWeight: "bold",
-        },
+        tabBarStyle: { height: 82 },
+        tabBarLabelStyle: { fontWeight: "bold" },
       }}
     >
       <Tabs.Screen
