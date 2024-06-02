@@ -10,6 +10,7 @@ import {
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
 import { Tabs, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { useSetRecoilState } from "recoil";
@@ -40,6 +41,7 @@ export default function HistoryScreen() {
 
   return (
     <>
+      <StatusBar style="dark" />
       <Tabs.Screen
         options={{
           title: i18n.t("履歴"),

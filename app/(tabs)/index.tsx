@@ -10,6 +10,7 @@ import { ScannedUrlState } from "../../atom/ScannedUrl";
 import { addCountForStore } from "../../utils/addCountForStore";
 import { i18n } from "../../utils/i18n";
 import { saveHistory } from "../../utils/storage";
+import { StatusBar } from "expo-status-bar";
 
 export default function TabOneScreen() {
   const [hasPermission, setHasPermission] = useState(false);
@@ -59,44 +60,47 @@ export default function TabOneScreen() {
     );
   }
   return (
-    <View style={{ flex: 1 }}>
-      <CameraView
-        onBarcodeScanned={handleBarCodeScanned}
-        barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
-        style={StyleSheet.absoluteFillObject}
-      />
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "center",
-          justifyContent: "center",
-          position: "absolute",
-          height: "100%",
-          backgroundColor: "transparent",
-        }}
-      >
-        <MaterialCommunityIcons
-          name="qrcode-scan"
-          size={128}
-          color={"rgba(255,255,255,0.5)"}
+    <>
+      <StatusBar style="dark" />
+      <View style={{ flex: 1 }}>
+        <CameraView
+          onBarcodeScanned={handleBarCodeScanned}
+          barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
+          style={StyleSheet.absoluteFillObject}
         />
+        <View
+          style={{
+            flex: 1,
+            alignSelf: "center",
+            justifyContent: "center",
+            position: "absolute",
+            height: "100%",
+            backgroundColor: "transparent",
+          }}
+        >
+          <MaterialCommunityIcons
+            name="qrcode-scan"
+            size={128}
+            color={"rgba(255,255,255,0.5)"}
+          />
+        </View>
+        <View
+          style={{
+            alignSelf: "center",
+            alignItems: "center",
+            marginTop: 12,
+            paddingHorizontal: 20,
+            paddingVertical: 12,
+            borderRadius: 8,
+            position: "absolute",
+            backgroundColor: "rgba(0,0,0,0.5)",
+          }}
+        >
+          <Text style={{ fontSize: 16, color: "white" }}>
+            {i18n.t("QRコードを配置を配置してください")}
+          </Text>
+        </View>
       </View>
-      <View
-        style={{
-          alignSelf: "center",
-          alignItems: "center",
-          marginTop: 12,
-          paddingHorizontal: 20,
-          paddingVertical: 12,
-          borderRadius: 8,
-          position: "absolute",
-          backgroundColor: "rgba(0,0,0,0.5)",
-        }}
-      >
-        <Text style={{ fontSize: 16, color: "white" }}>
-          {i18n.t("QRコードを配置を配置してください")}
-        </Text>
-      </View>
-    </View>
+    </>
   );
 }

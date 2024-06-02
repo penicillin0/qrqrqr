@@ -1,6 +1,7 @@
 import { Entypo, Octicons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import { Stack, router, useNavigation } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import {
   Alert,
@@ -32,6 +33,7 @@ export default function ResultScreen() {
 
   return (
     <>
+      <StatusBar style="dark" />
       <Stack.Screen
         options={{
           headerBackTitle: i18n.t("戻る"),
