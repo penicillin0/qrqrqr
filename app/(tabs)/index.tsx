@@ -1,11 +1,11 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
-import { BarCodeScanner } from "expo-barcode-scanner";
+import { Camera, CameraView } from "expo-camera";
 import { useRouter } from "expo-router";
 import * as StoreReview from "expo-store-review";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { ScannedUrlState } from "../../atom/ScannedUrl";
 import { addCountForStore } from "../../utils/addCountForStore";
 import { i18n } from "../../utils/i18n";
@@ -13,24 +13,23 @@ import { saveHistory } from "../../utils/storage";
 
 export default function TabOneScreen() {
   const [hasPermission, setHasPermission] = useState(false);
-  const setScannedUrl = useSetRecoilState(ScannedUrlState);
+  const [scannedUrl, setScannedUrl] = useRecoilState(ScannedUrlState);
+
   const router = useRouter();
   const isFocused = useIsFocused();
 
   useEffect(() => {
+    setScannedUrl("");
+
     (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === "granted");
     })();
   }, []);
 
-  const handleBarCodeScanned = async ({
-    type,
-    data,
-  }: {
-    type: string;
-    data: string;
-  }) => {
+  const handleBarCodeScanned = async ({ data }: { data: string }) => {
+    if (scannedUrl) return;
+
     setScannedUrl(data);
     const count = await addCountForStore();
 
@@ -51,10 +50,19 @@ export default function TabOneScreen() {
   if (!isFocused) {
     return null;
   }
+
+  if (!hasPermission) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>{i18n.t("設定からカメラの使用を許可してください")}</Text>
+      </View>
+    );
+  }
   return (
     <View style={{ flex: 1 }}>
-      <BarCodeScanner
-        onBarCodeScanned={handleBarCodeScanned}
+      <CameraView
+        onBarcodeScanned={handleBarCodeScanned}
+        barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
         style={StyleSheet.absoluteFillObject}
       />
       <View

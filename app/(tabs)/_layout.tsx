@@ -30,6 +30,7 @@ export default function TabLayout() {
     }
 
     const imageUri = result.assets[0].uri;
+    // TODO: BarCodeScannerが非推奨なので、代替手段を探す
     const barCodeUrl = (await BarCodeScanner.scanFromURLAsync(imageUri))[0]
       .data;
     setScannedUrl(barCodeUrl);
@@ -62,7 +63,10 @@ export default function TabLayout() {
             />
           ),
           headerRight: () => (
-            <Pressable onPress={pickImage}>
+            <Pressable
+              onPress={pickImage}
+              style={{ marginRight: 2, padding: 2 }}
+            >
               {({ pressed }) => (
                 <FontAwesome
                   name="photo"
